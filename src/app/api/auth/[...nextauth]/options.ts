@@ -24,23 +24,24 @@ export const options: NextAuthOptions = {
           return null;
         }
         console.log('==========================');
-
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials?.email,
-          },
-        });
-        console.log({ user });
-        if (user) {
-          if (user.name === credentials.name) {
-            return user;
-          } else {
-            return null;
-          }
-        }
-        console.log('this is a new user!');
-
         try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+              name: credentials.name,
+            },
+          });
+          console.log({ user });
+          if (user) {
+            //   if (user.name === credentials.name) {
+            //     return user;
+            //   } else {
+            //     return null;
+            //   }
+            return user;
+          }
+          console.log('this is a new user!');
+
           const newUser = await prisma.user.create({
             data: {
               name: credentials.name,
