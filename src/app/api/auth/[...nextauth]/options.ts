@@ -19,11 +19,11 @@ export const options: NextAuthOptions = {
       async authorize(credentials) {
         // DOCS: https://next-auth.js.org/configuration/providers/credentials
 
-        console.log({ credentials });
+        // console.log({ credentials });
         if (!credentials?.name || !credentials?.email) {
           return null;
         }
-        console.log('==========================');
+
         try {
           const user = await prisma.user.findUnique({
             where: {
@@ -33,14 +33,9 @@ export const options: NextAuthOptions = {
           });
           console.log({ user });
           if (user) {
-            //   if (user.name === credentials.name) {
-            //     return user;
-            //   } else {
-            //     return null;
-            //   }
             return user;
           }
-          console.log('this is a new user!');
+          // console.log('this is a new user!');
 
           const newUser = await prisma.user.create({
             data: {
@@ -50,7 +45,7 @@ export const options: NextAuthOptions = {
             },
           });
 
-          console.log('....we have a new user....');
+          // console.log('....we have a new user....');
 
           console.log({ newUser });
           if (newUser) {
