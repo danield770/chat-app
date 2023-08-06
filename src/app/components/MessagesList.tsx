@@ -1,6 +1,26 @@
+'use client';
+
+import { pusherClient } from '@/lib/pusher';
 import React from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 function MessagesList(existingMessages: Post[]) {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    pusherClient.subscribe('chats');
+
+    pusherClient.bind('new-msg', (newMsg: Post) => {
+      console.log(newMsg.id);
+      console.log(newMsg.content);
+
+      router.refresh();
+    });
+    return () => {
+      pusherClient.unsubscribe('chats');
+    };
+  }, []);
   console.log({ existingMessages });
 
   return (

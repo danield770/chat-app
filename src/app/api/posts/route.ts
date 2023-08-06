@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { pusherServer } from '../../../lib/pusher';
 
 export async function GET(request: Request) {
   const posts = await prisma.post.findMany();
@@ -15,6 +16,8 @@ export async function POST(request: Request) {
     });
 
     console.log({ post });
+
+    pusherServer.trigger('chats', 'new-msg', post);
 
     return new NextResponse(JSON.stringify(post), {
       status: 201,

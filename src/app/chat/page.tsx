@@ -8,6 +8,9 @@ import MessagesList from '../components/MessagesList';
 
 export default async function Chat() {
   const session = await getServerSession(options);
+  console.log('pusher app id', process.env.PUSHER_APP_ID as string);
+  console.log('pusher key', process.env.PUSHER_KEY as string);
+  console.log('pusher secret', process.env.PUSHER_SECRET as string);
 
   console.log({ session });
 
@@ -23,26 +26,11 @@ export default async function Chat() {
   });
 
   //   console.log({ existingMessages });
-  //   console.log({ filteredMessages });
   console.log(`number of existing messages: ${existingMessages.length}`);
-  //   console.log(`number of filtered messages: ${filteredMessages.length}`);
-  //   const messagesWithUserNames = await getMessagesWithUserNames(
-  //     existingMessages
-  //   );
-  //   console.log({ messagesWithUserNames });
 
-  // fetch a list of users from the database, via an API call.
   return (
     <main className='max-w-[1200px] relative'>
-      <div
-        className='h-[100dvh] grid grid-rows-[1fr_auto] border border-solid'
-        // style={{
-        //   height: '100dvh',
-        //   display: 'grid',
-        //   gridTemplateRows: '1fr auto',
-        //   border: '1px solid',
-        // }}
-      >
+      <div className='h-[100dvh] grid grid-rows-[1fr_auto] border border-solid'>
         <MessagesList {...existingMessages} />
         <MessageInput />
         <Link href='/api/auth/signout' className='absolute top-5 right-5'>
