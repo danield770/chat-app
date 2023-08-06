@@ -17,16 +17,27 @@ export default async function Chat() {
   if (!session) {
     redirect('/api/auth/signin?callbackUrl=/chat');
   }
-  const existingMessages: Post[] = await prisma.post.findMany({
-    orderBy: [
-      {
-        createdAt: 'asc',
-      },
-    ],
-  });
+  const existingMessages: Post[] =
+    session.user.role === 'admin'
+      ? await prisma.post.findMany({
+          orderBy: [
+            {
+              createdAt: 'asc',
+            },
+          ],
+        })
+      : await prisma.post.findMany({
+          where: {
+            NOT: { content: { contains: process.env.SECRET_WORD } },
+          },
+          orderBy: [
+            {
+              createdAt: 'asc',
+            },
+          ],
+        });
 
   //   console.log({ existingMessages });
-  console.log(`number of existing messages: ${existingMessages.length}`);
 
   return (
     <main className='max-w-[1200px] relative'>
