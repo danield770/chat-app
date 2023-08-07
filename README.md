@@ -16,21 +16,24 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* [Next.js (App Router)](https://nextjs.org/) - Front end and backend
+* [next-auth](https://next-auth.js.org/) - Authentication and authorization
+* [planetscale](https://planetscale.com/) mysql database
+* [Prisma](https://www.prisma.io/) ORM for db interactions
+* [Pusher](https://pusher.com/) for real-time socket-based functionality
+* [tailwind](https://tailwindcss.com/) for CSS
 
-## Learn More
+## Some Notes
 
-To learn more about Next.js, take a look at the following resources:
+* Next-auth provides sign-in and sign-out pages out of the box
+* I simplified sign-in process by only requiring a name and email.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For existing users: user name and email must match
+For new users: if a new email is detected - a new user is created
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+If the email contains "permit.io" - the user will be registered with an 'admin' role, otherwise their role will be 'user'
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
